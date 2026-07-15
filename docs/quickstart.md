@@ -48,13 +48,13 @@ pnpm db:seed-demo   # a couple of sessions, incl. a 2-run session for Prompt Dif
 
 ## Ports & env
 
-| Service | Default | Env override |
-|---|---|---|
-| Postgres | `localhost:5433` | `DATABASE_URL` |
-| Redis | `localhost:6380` | `REDIS_URL` |
-| Gateway | `:4000` | `GATEWAY_PORT` |
-| Read API | `:4001` | `API_PORT` |
-| Dashboard | `:5173` | `VITE_API_URL` (points the UI at the API) |
+| Service   | Default          | Env override                              |
+| --------- | ---------------- | ----------------------------------------- |
+| Postgres  | `localhost:5433` | `DATABASE_URL`                            |
+| Redis     | `localhost:6380` | `REDIS_URL`                               |
+| Gateway   | `:4000`          | `GATEWAY_PORT`                            |
+| Read API  | `:4001`          | `API_PORT`                                |
+| Dashboard | `:5173`          | `VITE_API_URL` (points the UI at the API) |
 
 The dev ports are remapped off the Postgres/Redis defaults (5432/6379) so they
 don't clash with a local install. For a container-only deploy see

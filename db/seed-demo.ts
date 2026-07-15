@@ -29,8 +29,24 @@ function buildTrace(question: string, answer: string, planPrompt: string): SpanS
   const fetch = randomUUID();
   const synth = randomUUID();
   return [
-    { span_id: root, parent: null, name: 'agent.run', kind: 'agent', startOff: 0, dur: 320, attrs: { question } },
-    { span_id: search, parent: root, name: 'web.search', kind: 'tool', startOff: 10, dur: 40, attrs: { query: question } },
+    {
+      span_id: root,
+      parent: null,
+      name: 'agent.run',
+      kind: 'agent',
+      startOff: 0,
+      dur: 320,
+      attrs: { question },
+    },
+    {
+      span_id: search,
+      parent: root,
+      name: 'web.search',
+      kind: 'tool',
+      startOff: 10,
+      dur: 40,
+      attrs: { query: question },
+    },
     {
       span_id: plan,
       parent: root,
@@ -44,7 +60,15 @@ function buildTrace(question: string, answer: string, planPrompt: string): SpanS
       cost: 0.0000768,
       attrs: { prompt: planPrompt, output: 'fetch top result, then summarize' },
     },
-    { span_id: fetch, parent: root, name: 'web.fetch', kind: 'tool', startOff: 120, dur: 80, attrs: { url: 'https://otel.io' } },
+    {
+      span_id: fetch,
+      parent: root,
+      name: 'web.fetch',
+      kind: 'tool',
+      startOff: 120,
+      dur: 80,
+      attrs: { url: 'https://otel.io' },
+    },
     {
       span_id: synth,
       parent: root,
@@ -61,7 +85,12 @@ function buildTrace(question: string, answer: string, planPrompt: string): SpanS
   ];
 }
 
-async function insertTrace(client: pg.Client, sessionId: string, spans: SpanSeed[], baseTime: number) {
+async function insertTrace(
+  client: pg.Client,
+  sessionId: string,
+  spans: SpanSeed[],
+  baseTime: number,
+) {
   const traceId = randomUUID();
   for (const s of spans) {
     const start = new Date(baseTime + s.startOff);

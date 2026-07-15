@@ -27,7 +27,13 @@ async function insert(
   kind: string,
   startOff: number,
   dur: number,
-  extra: Partial<{ model: string; input: number; output: number; cost: number; attrs: object }> = {},
+  extra: Partial<{
+    model: string;
+    input: number;
+    output: number;
+    cost: number;
+    attrs: object;
+  }> = {},
 ) {
   await pool.query(
     `INSERT INTO spans (span_id, trace_id, parent_span_id, session_id, name, kind,

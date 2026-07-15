@@ -12,11 +12,7 @@ import { SPAN_COLUMNS, type Span } from '@agentlens/shared';
 function encodeField(value: string | number | null): string {
   if (value === null) return '\\N';
   const s = typeof value === 'number' ? String(value) : value;
-  return s
-    .replace(/\\/g, '\\\\')
-    .replace(/\t/g, '\\t')
-    .replace(/\n/g, '\\n')
-    .replace(/\r/g, '\\r');
+  return s.replace(/\\/g, '\\\\').replace(/\t/g, '\\t').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 }
 
 /** One COPY text row (tab-separated, newline-terminated) for a span. */

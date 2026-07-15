@@ -24,7 +24,9 @@ async function main() {
     `);
 
     const files = (await readdir(migrationsDir)).filter((f) => f.endsWith('.sql')).sort();
-    const { rows } = await client.query<{ filename: string }>('SELECT filename FROM schema_migrations');
+    const { rows } = await client.query<{ filename: string }>(
+      'SELECT filename FROM schema_migrations',
+    );
     const applied = new Set(rows.map((r) => r.filename));
 
     for (const file of files) {

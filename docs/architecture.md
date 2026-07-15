@@ -45,14 +45,14 @@ Postgres prunes to one or two partitions instead of scanning every one. Full DDL
 
 ## Package map
 
-| Package | Role |
-|---|---|
-| `@agentlens/shared` | Zod span schema + pricing (single source of truth) |
-| `@agentlens/sdk` | Tracer, context propagation, batched export |
+| Package                | Role                                                           |
+| ---------------------- | -------------------------------------------------------------- |
+| `@agentlens/shared`    | Zod span schema + pricing (single source of truth)             |
+| `@agentlens/sdk`       | Tracer, context propagation, batched export                    |
 | `@agentlens/ingestion` | gateway, Redis consumer, idempotent COPY writer, partition job |
-| `@agentlens/api` | read API (sessions, trace tree, span detail) |
-| `@agentlens/dashboard` | React UI: waterfall, replay, prompt-diff |
-| `@agentlens/evals` | eval harness (pluggable judge) + `agentlens` CLI |
+| `@agentlens/api`       | read API (sessions, trace tree, span detail)                   |
+| `@agentlens/dashboard` | React UI: waterfall, replay, prompt-diff                       |
+| `@agentlens/evals`     | eval harness (pluggable judge) + `agentlens` CLI               |
 
 ## The two load-bearing claims
 
@@ -63,4 +63,4 @@ Both were easy to hand-wave, so both are validated by a test you can run:
    zero duplicates. Measured ~49k spans/sec sustained locally.
 2. **An eval gate that catches drift** — the CI gate runs the suite against pinned
    baselines, then re-runs it with a deliberately worsened prompt and asserts that it
-   *fails*. A gate that can't fail isn't a gate.
+   _fails_. A gate that can't fail isn't a gate.

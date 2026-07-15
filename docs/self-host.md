@@ -64,19 +64,19 @@ midnight write failure.
 
 ## Environment variables
 
-| Var | Used by | Default | Purpose |
-|---|---|---|---|
-| `DATABASE_URL` | writer, api, evals, migrate | `postgres://agentlens:agentlens@localhost:5433/agentlens` | Postgres DSN |
-| `REDIS_URL` | gateway, writer | `redis://localhost:6380` | Redis DSN |
-| `AGENTLENS_STREAM` | gateway, writer | `agentlens:spans` | Redis Stream key |
-| `AGENTLENS_GROUP` | writer | `writers` | consumer group |
-| `GATEWAY_PORT` | gateway | `4000` | gateway listen port |
-| `API_PORT` | api | `4001` | read API listen port |
-| `WRITER_READ_COUNT` | writer | `50` | stream entries per read |
-| `WRITER_BLOCK_MS` | writer | `2000` | block time waiting for entries |
-| `WRITER_POOL_SIZE` | writer | `8` | Postgres pool size |
-| `TRACE_WINDOW_HOURS` | api | `24` | partition-pruning window for trace lookups |
-| `VITE_API_URL` | dashboard (build) | `http://localhost:4001` | API base URL baked into the UI |
+| Var                  | Used by                     | Default                                                   | Purpose                                    |
+| -------------------- | --------------------------- | --------------------------------------------------------- | ------------------------------------------ |
+| `DATABASE_URL`       | writer, api, evals, migrate | `postgres://agentlens:agentlens@localhost:5433/agentlens` | Postgres DSN                               |
+| `REDIS_URL`          | gateway, writer             | `redis://localhost:6380`                                  | Redis DSN                                  |
+| `AGENTLENS_STREAM`   | gateway, writer             | `agentlens:spans`                                         | Redis Stream key                           |
+| `AGENTLENS_GROUP`    | writer                      | `writers`                                                 | consumer group                             |
+| `GATEWAY_PORT`       | gateway                     | `4000`                                                    | gateway listen port                        |
+| `API_PORT`           | api                         | `4001`                                                    | read API listen port                       |
+| `WRITER_READ_COUNT`  | writer                      | `50`                                                      | stream entries per read                    |
+| `WRITER_BLOCK_MS`    | writer                      | `2000`                                                    | block time waiting for entries             |
+| `WRITER_POOL_SIZE`   | writer                      | `8`                                                       | Postgres pool size                         |
+| `TRACE_WINDOW_HOURS` | api                         | `24`                                                      | partition-pruning window for trace lookups |
+| `VITE_API_URL`       | dashboard (build)           | `http://localhost:4001`                                   | API base URL baked into the UI             |
 
 ## Scaling & operations
 

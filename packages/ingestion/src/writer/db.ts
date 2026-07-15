@@ -26,9 +26,7 @@ export async function writeSpans(pool: pg.Pool, spans: Span[]): Promise<number> 
     await client.query('BEGIN');
     await client.query('TRUNCATE spans_staging');
 
-    const copyStream = client.query(
-      copyFrom(`COPY spans_staging (${COPY_COLUMNS}) FROM STDIN`),
-    );
+    const copyStream = client.query(copyFrom(`COPY spans_staging (${COPY_COLUMNS}) FROM STDIN`));
     const source = Readable.from(spans.map(encodeSpanRow));
     await pipeline(source, copyStream);
 

@@ -14,6 +14,8 @@ export async function loadBaseline(path: string): Promise<Baseline> {
 }
 
 export async function saveBaseline(path: string, baseline: Baseline): Promise<void> {
-  const sorted = Object.fromEntries(Object.entries(baseline).sort(([a], [b]) => a.localeCompare(b)));
+  const sorted = Object.fromEntries(
+    Object.entries(baseline).sort(([a], [b]) => a.localeCompare(b)),
+  );
   await writeFile(path, JSON.stringify(sorted, null, 2) + '\n', 'utf8');
 }

@@ -85,11 +85,7 @@ export class Tracer {
    * anything awaited inside `fn`, and closes+enqueues it when `fn` settles (even on
    * throw). Returns whatever `fn` returns.
    */
-  async span<T>(
-    name: string,
-    kind: SpanKind,
-    fn: (span: ActiveSpan) => Promise<T>,
-  ): Promise<T> {
+  async span<T>(name: string, kind: SpanKind, fn: (span: ActiveSpan) => Promise<T>): Promise<T> {
     const parent = this.als.getStore();
     const traceId = parent?.traceId ?? randomUUID();
     const spanId = randomUUID();

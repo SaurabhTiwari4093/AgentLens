@@ -24,7 +24,8 @@ export function parseJudgeResponse(text: string): JudgeResult {
   if (!match) throw new Error(`judge response had no JSON object: ${text.slice(0, 200)}`);
   const obj = JSON.parse(match[0]) as { score?: unknown; rationale?: unknown };
   const score = Number(obj.score);
-  if (!Number.isFinite(score)) throw new Error(`judge returned non-numeric score: ${text.slice(0, 200)}`);
+  if (!Number.isFinite(score))
+    throw new Error(`judge returned non-numeric score: ${text.slice(0, 200)}`);
   return {
     score: Math.min(1, Math.max(0, score)),
     rationale: typeof obj.rationale === 'string' ? obj.rationale : '',

@@ -14,12 +14,12 @@ import type { EvalSuite } from '@agentlens/evals';
 const suite: EvalSuite = {
   name: 'support-answers',
   rubric: 'The answer must fully and specifically resolve the question, ...',
-  threshold: 0.15,                       // max allowed drop from baseline
+  threshold: 0.15, // max allowed drop from baseline
   cases: [
     { id: 'refund-window', input: 'How do I get a refund?', reference: '...' },
     // ...
   ],
-  target: async (input, testCase) => callYourAgent(input),   // system under test
+  target: async (input, testCase) => callYourAgent(input), // system under test
 };
 export default suite;
 ```

@@ -38,7 +38,9 @@ function parseArgs(argv: string[]): Args {
   }
   const spec = positional[0];
   if (!spec) {
-    console.error('usage: agentlens eval <spec> [--update-baseline] [--baseline=path] [--threshold=n] [--db] [--json]');
+    console.error(
+      'usage: agentlens eval <spec> [--update-baseline] [--baseline=path] [--threshold=n] [--db] [--json]',
+    );
     process.exit(2);
   }
   return {

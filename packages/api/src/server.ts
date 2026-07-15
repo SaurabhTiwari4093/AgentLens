@@ -2,13 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import pg from 'pg';
 import { config } from './config.js';
-import {
-  getSessionSpans,
-  getSpan,
-  getTrace,
-  listSessions,
-  listSessionTraces,
-} from './queries.js';
+import { getSessionSpans, getSpan, getTrace, listSessions, listSessionTraces } from './queries.js';
 
 /**
  * Read API for the dashboard. Pure reads — no writes here. Trace/span lookups take

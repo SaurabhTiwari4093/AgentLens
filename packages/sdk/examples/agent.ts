@@ -92,8 +92,7 @@ async function printTrace(sessionId: string) {
     const walk = (parent: string | null, depth: number) => {
       for (const r of byParent.get(parent) ?? []) {
         const pad = '  '.repeat(depth);
-        const tokens =
-          r.input_tokens != null ? ` ${r.input_tokens}→${r.output_tokens} tok` : '';
+        const tokens = r.input_tokens != null ? ` ${r.input_tokens}→${r.output_tokens} tok` : '';
         const cost = r.cost_usd != null ? ` $${Number(r.cost_usd).toFixed(6)}` : '';
         if (r.cost_usd != null) totalCost += Number(r.cost_usd);
         console.log(`${pad}• [${r.kind}] ${r.name} — ${r.duration_ms}ms${tokens}${cost}`);

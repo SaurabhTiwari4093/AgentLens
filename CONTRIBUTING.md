@@ -19,17 +19,17 @@ pnpm test
 
 ## Layout
 
-| Package | What it is |
-|---|---|
-| `packages/shared` | Zod span schema + pricing table — the one source of truth for span shape |
-| `packages/sdk` | instrumentation library (Tracer, exporters) |
-| `packages/ingestion` | gateway + Redis consumer + idempotent COPY writer |
-| `packages/api` | read API for the dashboard |
-| `packages/dashboard` | React app (Vite) |
-| `packages/evals` | eval harness (pluggable judge) + `agentlens` CLI |
-| `db/` | migrations + partition management |
-| `docker/` | compose: postgres + redis |
-| `docs/` | quickstart, SDK reference, self-host, evals |
+| Package              | What it is                                                               |
+| -------------------- | ------------------------------------------------------------------------ |
+| `packages/shared`    | Zod span schema + pricing table — the one source of truth for span shape |
+| `packages/sdk`       | instrumentation library (Tracer, exporters)                              |
+| `packages/ingestion` | gateway + Redis consumer + idempotent COPY writer                        |
+| `packages/api`       | read API for the dashboard                                               |
+| `packages/dashboard` | React app (Vite)                                                         |
+| `packages/evals`     | eval harness (pluggable judge) + `agentlens` CLI                         |
+| `db/`                | migrations + partition management                                        |
+| `docker/`            | compose: postgres + redis                                                |
+| `docs/`              | quickstart, SDK reference, self-host, evals                              |
 
 ## Before you open a PR
 

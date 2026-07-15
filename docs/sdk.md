@@ -28,9 +28,9 @@ import { randomUUID } from 'node:crypto';
 
 const tracer = new Tracer({
   exporter: new HttpExporter('http://localhost:4000/v1/spans'),
-  sessionId: randomUUID(),       // groups a conversation for Session Replay
-  maxBatchSize: 200,             // flush when this many spans buffer
-  flushIntervalMs: 2000,         // …or at least this often
+  sessionId: randomUUID(), // groups a conversation for Session Replay
+  maxBatchSize: 200, // flush when this many spans buffer
+  flushIntervalMs: 2000, // …or at least this often
 });
 
 const answer = await tracer.agent('agent.run', async (root) => {
@@ -43,8 +43,8 @@ const answer = await tracer.agent('agent.run', async (root) => {
 
   return tracer.llm('synthesize', 'gpt-4o', async (s) => {
     const res = await llm.chat({ model: 'gpt-4o', messages });
-    s.setUsage(res.usage.input_tokens, res.usage.output_tokens);  // drives cost
-    s.setAttributes({ prompt, output: res.text });                // shown in the UI
+    s.setUsage(res.usage.input_tokens, res.usage.output_tokens); // drives cost
+    s.setAttributes({ prompt, output: res.text }); // shown in the UI
     return res.text;
   });
 });
@@ -60,13 +60,13 @@ automatically linked as its children in the same trace — no manual id threadin
 
 ### `new Tracer(options)`
 
-| Option | Type | Default | Notes |
-|---|---|---|---|
-| `exporter` | `Exporter` | — | required; where spans go |
-| `sessionId` | `string` | `null` | groups spans into a session |
-| `maxBatchSize` | `number` | `200` | flush at this buffer size |
-| `flushIntervalMs` | `number` | `2000` | periodic flush interval |
-| `onError` | `(err) => void` | logs | export failure handler |
+| Option            | Type            | Default | Notes                       |
+| ----------------- | --------------- | ------- | --------------------------- |
+| `exporter`        | `Exporter`      | —       | required; where spans go    |
+| `sessionId`       | `string`        | `null`  | groups spans into a session |
+| `maxBatchSize`    | `number`        | `200`   | flush at this buffer size   |
+| `flushIntervalMs` | `number`        | `2000`  | periodic flush interval     |
+| `onError`         | `(err) => void` | logs    | export failure handler      |
 
 Methods:
 

@@ -32,7 +32,9 @@ describe('MockJudge', () => {
   });
 
   it('penalizes refusals and empty output', async () => {
-    expect((await judge.score({ input: 'q', output: '', reference: 'x y', rubric: 'r' })).score).toBe(0);
+    expect(
+      (await judge.score({ input: 'q', output: '', reference: 'x y', rubric: 'r' })).score,
+    ).toBe(0);
     const refused = await judge.score({
       input: 'q',
       output: "I don't know how to help with refunds within 30 days",
