@@ -66,6 +66,12 @@ node packages/evals/dist/cli.js eval \
 - **Ingestion is idempotent by `(started_at, span_id)`.** Any change to the write
   path must keep the crash test green.
 - Keep code style consistent with the surrounding files; `pnpm format` runs Prettier.
+- **TypeScript is deliberately pinned to 6.x, not 7.** No release of
+  `typescript-eslint` supports TS 7 yet — stable and canary both declare peer
+  `typescript <6.1.0`, and `typescript-estree` throws at import time under TS 7.
+  Since it's the TS parser that lets ESLint read `.ts` files at all, upgrading
+  would drop linting entirely rather than just losing type-aware rules. Bump it
+  once typescript-eslint ships TS 7 support.
 
 ## Scope
 
