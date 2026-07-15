@@ -85,6 +85,64 @@ function buildTrace(question: string, answer: string, planPrompt: string): SpanS
   ];
 }
 
+/**
+ * A run that dies mid-way: web.fetch throws, the error propagates to the root
+ * (same attribute convention as the SDK's tracer), and synthesize never happens.
+ * Gives the dashboard's Errors filter and error status pill something to show.
+ */
+function buildFailedTrace(question: string): SpanSeed[] {
+  const root = randomUUID();
+  const search = randomUUID();
+  const plan = randomUUID();
+  const fetch = randomUUID();
+  const errorMessage = 'HTTP 503 from https://flaky.example.com';
+  return [
+    {
+      span_id: root,
+      parent: null,
+      name: 'agent.run',
+      kind: 'agent',
+      startOff: 0,
+      dur: 180,
+      attrs: { question, error: true, error_message: errorMessage },
+    },
+    {
+      span_id: search,
+      parent: root,
+      name: 'web.search',
+      kind: 'tool',
+      startOff: 10,
+      dur: 40,
+      attrs: { query: question },
+    },
+    {
+      span_id: plan,
+      parent: root,
+      name: 'plan',
+      kind: 'llm',
+      startOff: 55,
+      dur: 60,
+      model: 'gpt-4o-mini',
+      input: 310,
+      output: 42,
+      cost: 0.0000744,
+      attrs: {
+        prompt: `Plan how to answer: ${question}`,
+        output: 'fetch top result, then summarize',
+      },
+    },
+    {
+      span_id: fetch,
+      parent: root,
+      name: 'web.fetch',
+      kind: 'tool',
+      startOff: 120,
+      dur: 55,
+      attrs: { url: 'https://flaky.example.com', error: true, error_message: errorMessage },
+    },
+  ];
+}
+
 async function insertTrace(
   client: pg.Client,
   sessionId: string,
@@ -161,7 +219,19 @@ async function main() {
       now - 10_000,
     );
 
-    console.log(`✓ seeded demo sessions:\n  ${s1}  (2 runs — try Prompt Diff)\n  ${s2}  (1 run)`);
+    // Session 3: a run that fails at web.fetch — exercises the Errors filter,
+    // the red error count on session cards, and the trace's error status pill.
+    const s3 = randomUUID();
+    await insertTrace(
+      client,
+      s3,
+      buildFailedTrace('What changed in the latest Kubernetes release?'),
+      now - 5_000,
+    );
+
+    console.log(
+      `✓ seeded demo sessions:\n  ${s1}  (2 runs — try Prompt Diff)\n  ${s2}  (1 run)\n  ${s3}  (1 failed run — try the Errors filter)`,
+    );
   } finally {
     await client.end();
   }
