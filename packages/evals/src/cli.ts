@@ -7,8 +7,8 @@
  * Exit code is 1 when any case regresses past its threshold — that's what blocks a
  * merge in CI. `--update-baseline` re-pins baselines and always exits 0.
  *
- * Run the CLI with type stripping so it can import .ts spec files:
- *   node --experimental-strip-types dist/cli.js eval <spec.ts>
+ * Spec files may be .ts — Node 24 strips types natively, no flag needed:
+ *   node dist/cli.js eval <spec.ts>
  */
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';

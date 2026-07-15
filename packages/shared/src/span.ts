@@ -17,10 +17,13 @@ export type SpanKind = z.infer<typeof SpanKind>;
  * the read path never has to compute it.
  */
 export const Span = z.object({
-  trace_id: z.string().uuid(),
-  span_id: z.string().uuid(),
-  parent_span_id: z.string().uuid().nullable().default(null),
-  session_id: z.string().uuid().nullable().default(null),
+  // z.guid(), not z.uuid(): Zod 4's uuid() enforces RFC 4122 version/variant bits,
+  // which is stricter than the Postgres UUID column we store into. guid() keeps the
+  // wire format aligned with storage and accepts any 8-4-4-4-12 hex id.
+  trace_id: z.guid(),
+  span_id: z.guid(),
+  parent_span_id: z.guid().nullable().default(null),
+  session_id: z.guid().nullable().default(null),
   name: z.string().min(1).max(512),
   kind: SpanKind,
   started_at: z.string().datetime({ offset: true }),
@@ -31,8 +34,8 @@ export const Span = z.object({
   output_tokens: z.number().int().nonnegative().nullable().default(null),
   cost_usd: z.number().nonnegative().nullable().default(null),
   // Free-form: prompt, params, tool args, output. Kept as an object so the schema
-  // stays stable while the payload evolves.
-  attributes: z.record(z.unknown()).default({}),
+  // stays stable while the payload evolves. Zod 4 requires an explicit key schema.
+  attributes: z.record(z.string(), z.unknown()).default({}),
 });
 export type Span = z.infer<typeof Span>;
 

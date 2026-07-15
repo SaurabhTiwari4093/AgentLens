@@ -4,7 +4,7 @@ Thanks for your interest. AgentLens is a pnpm monorepo of TypeScript packages.
 
 ## Prerequisites
 
-- Node.js 22+
+- Node.js 24+
 - pnpm 10+
 - Docker (for Postgres + Redis)
 
@@ -53,7 +53,7 @@ If you touch prompts or eval behavior, re-run the gate and re-pin baselines only
 when a change is intentional:
 
 ```bash
-node --experimental-strip-types packages/evals/dist/cli.js eval \
+node packages/evals/dist/cli.js eval \
   packages/evals/examples/support.eval.ts --update-baseline
 ```
 

@@ -7,7 +7,7 @@
   "type": "module",
   "packageManager": "pnpm@10.23.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "scripts": {
     "build": "pnpm -r build",
@@ -17,26 +17,28 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "db:migrate": "node --experimental-strip-types db/migrate.ts",
-    "db:smoke": "node --experimental-strip-types db/smoke.ts",
-    "example:agent": "node --experimental-strip-types packages/sdk/examples/agent.ts",
-    "db:seed-demo": "node --experimental-strip-types db/seed-demo.ts",
-    "eval:example": "pnpm --filter @agentlens/evals build && node --experimental-strip-types packages/evals/dist/cli.js eval packages/evals/examples/support.eval.ts",
+    "db:migrate": "node db/migrate.ts",
+    "db:smoke": "node db/smoke.ts",
+    "example:agent": "node packages/sdk/examples/agent.ts",
+    "db:seed-demo": "node db/seed-demo.ts",
+    "eval:example": "pnpm --filter @agentlens/evals build && node packages/evals/dist/cli.js eval packages/evals/examples/support.eval.ts",
     "docker:up": "docker compose -f docker/docker-compose.yml up -d",
     "docker:down": "docker compose -f docker/docker-compose.yml down"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/node": "^22.10.0",
-    "@types/pg": "^8.11.10",
-    "pg": "^8.13.1",
-    "eslint": "^9.17.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.0",
-    "vitest": "^2.1.8"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.7.0",
+    "pg": "^8.22.0",
+    "prettier": "^3.9.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.64.0",
+    "vitest": "^4.1.10"
   }
 }

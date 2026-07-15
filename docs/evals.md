@@ -54,10 +54,10 @@ agentlens eval <spec> [--update-baseline] [--baseline=<path>] [--threshold=<n>] 
 - `--db` also persists every case result to the `eval_runs` table (needs
   `DATABASE_URL`; `GIT_SHA` is recorded if set)
 
-Run it with type stripping so it can load `.ts` specs:
+Specs can be `.ts` — Node 24 strips types natively, so no flag is needed:
 
 ```bash
-node --experimental-strip-types packages/evals/dist/cli.js eval \
+node packages/evals/dist/cli.js eval \
   packages/evals/examples/support.eval.ts
 ```
 

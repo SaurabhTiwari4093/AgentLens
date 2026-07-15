@@ -11,17 +11,18 @@
     "gateway": "pnpm build && node dist/gateway/server.js",
     "writer": "pnpm build && node dist/writer/main.js",
     "partition-job": "pnpm build && node dist/writer/partition-job.js",
-    "loadtest": "node --experimental-strip-types loadtest/run.ts",
-    "crashtest": "node --experimental-strip-types loadtest/crash.ts"
+    "loadtest": "node loadtest/run.ts",
+    "crashtest": "node loadtest/crash.ts"
   },
   "dependencies": {
     "@agentlens/shared": "workspace:*",
-    "fastify": "^5.2.0",
-    "ioredis": "^5.4.2",
-    "pg": "^8.13.1",
-    "pg-copy-streams": "^6.0.6"
+    "fastify": "^5.10.0",
+    "ioredis": "^5.11.1",
+    "pg": "^8.22.0",
+    "pg-copy-streams": "^7.0.0"
   },
   "devDependencies": {
+    "@types/node": "^26.1.1",
     "@types/pg": "^8.11.10",
     "@types/pg-copy-streams": "^1.2.5"
   }

@@ -5,6 +5,10 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
+    // Declare node types explicitly. TS 7 no longer auto-discovers @types through
+    // pnpm's symlinked node_modules, so relying on ambient discovery breaks any
+    // package that doesn't happen to pull @types/node in transitively.
+    "types": ["node"],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

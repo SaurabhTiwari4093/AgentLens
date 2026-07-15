@@ -11,13 +11,14 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "eval": "pnpm build && node --experimental-strip-types dist/cli.js"
+    "eval": "pnpm build && node dist/cli.js"
   },
   "dependencies": {
     "@agentlens/shared": "workspace:*",
-    "pg": "^8.13.1"
+    "pg": "^8.22.0"
   },
   "devDependencies": {
+    "@types/node": "^26.1.1",
     "@types/pg": "^8.11.10"
   }
 }

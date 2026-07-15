@@ -55,9 +55,9 @@ Open http://localhost:5173 — sessions auto-refresh (TanStack `refetchInterval`
 
 ```bash
 cd packages/evals
-node --experimental-strip-types dist/cli.js eval examples/support.eval.ts --update-baseline  # pin
-node --experimental-strip-types dist/cli.js eval examples/support.eval.ts                    # PASS
-PROMPT_MODE=bad node --experimental-strip-types dist/cli.js eval examples/support.eval.ts     # FAIL (regression caught)
+node dist/cli.js eval examples/support.eval.ts --update-baseline  # pin
+node dist/cli.js eval examples/support.eval.ts                    # PASS
+PROMPT_MODE=bad node dist/cli.js eval examples/support.eval.ts     # FAIL (regression caught)
 ```
 
 The CI `Eval Gate` workflow runs this on every PR and blocks merge when scores drop past threshold. See [docs/evals.md](docs/evals.md).
