@@ -43,7 +43,7 @@ pnpm --filter @agentlens/ingestion crashtest   # no dup rows after a writer cras
 ### API + dashboard (Phase 3)
 
 ```bash
-pnpm db:seed-demo                  # optional: seed demo sessions (incl. a 2-run session for diff)
+pnpm db:seed-demo                  # optional: demo sessions (a 2-run session for diff + a failed run)
 pnpm --filter @agentlens/api start        # read API on :4001
 pnpm --filter @agentlens/dashboard dev    # dashboard on :5173 (Vite)
 ```

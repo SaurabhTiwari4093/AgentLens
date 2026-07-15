@@ -43,7 +43,7 @@ Waterfall, Session Replay, and Prompt Diff views. The session list auto-refreshe
 ## 4. Seed demo data (optional)
 
 ```bash
-pnpm db:seed-demo   # a couple of sessions, incl. a 2-run session for Prompt Diff
+pnpm db:seed-demo   # a few sessions: a 2-run session for Prompt Diff, plus a failed run for the Errors filter
 ```
 
 ## Ports & env
