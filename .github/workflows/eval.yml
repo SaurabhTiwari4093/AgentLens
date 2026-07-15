@@ -1,0 +1,36 @@
+name: Eval Gate
+
+# Blocks merge when a prompt regression drops eval scores past their threshold.
+# Uses the deterministic MockJudge so the gate is reproducible without API keys.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @agentlens/evals build
+      # Runs against the pinned baseline; exits non-zero on regression => merge blocked.
+      - name: Run prompt-regression suite
+        working-directory: packages/evals
+        run: node --experimental-strip-types dist/cli.js eval examples/support.eval.ts
+      # Prove the gate actually catches drift: a worsened prompt MUST fail.
+      - name: Verify the gate catches a worsened prompt
+        working-directory: packages/evals
+        run: |
+          if PROMPT_MODE=bad node --experimental-strip-types dist/cli.js eval examples/support.eval.ts; then
+            echo "::error::worsened prompt did not fail the gate"; exit 1
+          else
+            echo "gate correctly blocked the regression"
+          fi

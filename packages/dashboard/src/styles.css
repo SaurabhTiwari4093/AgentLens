@@ -1,0 +1,287 @@
+:root {
+  --bg: #0f1116;
+  --panel: #171a21;
+  --panel-2: #1e222b;
+  --border: #2a2f3a;
+  --text: #e6e8ee;
+  --muted: #8b93a7;
+  --accent: #7c6cf0;
+  --accent-dim: #2a2550;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--border);
+  background: var(--panel);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2fb7a5;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.session-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.session-item:hover {
+  background: var(--panel-2);
+}
+
+.session-item.active {
+  background: var(--accent-dim);
+  border-left: 3px solid var(--accent);
+  padding-left: 13px;
+}
+
+.session-item .id {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.session-item .meta {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.main {
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 12px 20px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.tab.active {
+  color: var(--text);
+  background: var(--panel-2);
+  border-color: var(--border);
+}
+
+.content {
+  padding: 20px;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 40px;
+  text-align: center;
+}
+
+.pill {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #0f1116;
+}
+
+select,
+button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Waterfall */
+.wf-row {
+  display: grid;
+  grid-template-columns: 260px 1fr 150px;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.wf-row:hover {
+  background: var(--panel-2);
+}
+
+.wf-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.wf-track {
+  position: relative;
+  height: 18px;
+  background: var(--panel-2);
+  border-radius: 4px;
+}
+
+.wf-bar {
+  position: absolute;
+  height: 100%;
+  border-radius: 4px;
+  min-width: 2px;
+  opacity: 0.9;
+}
+
+.wf-stats {
+  text-align: right;
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Detail panel */
+.detail {
+  margin-top: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 4px 12px;
+  margin-bottom: 10px;
+}
+
+.kv .k {
+  color: var(--muted);
+}
+
+pre {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+/* Replay */
+.replay-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.replay-controls input[type='range'] {
+  flex: 1;
+}
+
+/* Diff */
+.diff-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.diff-pane h4 {
+  margin: 0 0 6px;
+}
+
+.diff-line {
+  padding: 1px 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.diff-add {
+  background: rgba(47, 183, 165, 0.18);
+}
+
+.diff-del {
+  background: rgba(224, 90, 90, 0.18);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+h2,
+h3 {
+  margin: 0 0 12px;
+}

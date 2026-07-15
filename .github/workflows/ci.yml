@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      # CI service containers use default ports; local dev remaps to 5433/6380.
+      DATABASE_URL: postgres://agentlens:agentlens@localhost:5432/agentlens
+      REDIS_URL: redis://localhost:6379
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: agentlens
+          POSTGRES_PASSWORD: agentlens
+          POSTGRES_DB: agentlens
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U agentlens"
+          --health-interval 2s --health-timeout 3s --health-retries 20
+      redis:
+        image: redis:7
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 2s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm lint
+      - run: pnpm typecheck
+      # Migrate before test: some integration tests read from the schema.
+      - run: pnpm db:migrate
+      - run: pnpm test
+      - run: pnpm db:smoke
+      # Fast, deterministic guard for the ingestion idempotency guarantee.
+      - run: pnpm --filter @agentlens/ingestion crashtest

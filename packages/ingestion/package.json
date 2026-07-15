@@ -1,0 +1,28 @@
+{
+  "name": "@agentlens/ingestion",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "gateway": "pnpm build && node dist/gateway/server.js",
+    "writer": "pnpm build && node dist/writer/main.js",
+    "partition-job": "pnpm build && node dist/writer/partition-job.js",
+    "loadtest": "node --experimental-strip-types loadtest/run.ts",
+    "crashtest": "node --experimental-strip-types loadtest/crash.ts"
+  },
+  "dependencies": {
+    "@agentlens/shared": "workspace:*",
+    "fastify": "^5.2.0",
+    "ioredis": "^5.4.2",
+    "pg": "^8.13.1",
+    "pg-copy-streams": "^6.0.6"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10",
+    "@types/pg-copy-streams": "^1.2.5"
+  }
+}

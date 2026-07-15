@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: agentlens-postgres
+    environment:
+      POSTGRES_USER: agentlens
+      POSTGRES_PASSWORD: agentlens
+      POSTGRES_DB: agentlens
+    ports:
+      # Host 5433 to avoid clashing with a local Postgres on 5432.
+      - '5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U agentlens']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7
+    container_name: agentlens-redis
+    # AOF enabled: the Redis Stream is our durable buffer between gateway and
+    # writer (see build plan §2). appendfsync everysec bounds worst-case loss to
+    # ~1s of in-flight telemetry on a hard crash.
+    command: ['redis-server', '--appendonly', 'yes', '--appendfsync', 'everysec']
+    ports:
+      # Host 6380 to avoid clashing with a local Redis on 6379.
+      - '6380:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
+  redisdata:
