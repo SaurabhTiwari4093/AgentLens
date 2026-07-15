@@ -52,7 +52,7 @@ Postgres prunes to one or two partitions instead of scanning every one. Full DDL
 | `@agentlens/ingestion` | gateway, Redis consumer, idempotent COPY writer, partition job |
 | `@agentlens/api` | read API (sessions, trace tree, span detail) |
 | `@agentlens/dashboard` | React UI: waterfall, replay, prompt-diff |
-| `@agentlens/evals` | LLM-as-judge harness + `agentlens` CLI |
+| `@agentlens/evals` | eval harness (pluggable judge) + `agentlens` CLI |
 
 ## The two load-bearing claims
 

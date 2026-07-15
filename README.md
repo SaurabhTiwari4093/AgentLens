@@ -4,8 +4,8 @@ Open-source observability & evals for LLM agents.
 
 - **SDK (TypeScript)** — instruments tool calls, token usage, cost, and latency into OTel-style traces.
 - **Dashboard (React)** — waterfall views, session replay, prompt-diff.
-- **Ingestion (Node.js)** — partitioned Postgres trace tables, Redis-buffered batch writes sustaining 5,000+ spans/sec.
-- **Evals** — an LLM-as-judge harness that runs prompt-regression suites in CI.
+- **Ingestion (Node.js)** — partitioned Postgres trace tables, crash-safe idempotent Redis-buffered batch writes sustaining 40k+ spans/sec.
+- **Evals** — a prompt-regression harness (pluggable LLM-as-judge) that gates CI to catch quality drift before deploy.
 
 ## Docs
 
@@ -13,7 +13,7 @@ Open-source observability & evals for LLM agents.
 - [SDK reference](docs/sdk.md) — instrument your agent
 - [Architecture](docs/architecture.md) — how the pieces fit and the durability guarantees
 - [Self-hosting](docs/self-host.md) — deploy, env vars, scaling, real LLM judge
-- [Evals](docs/evals.md) — the LLM-as-judge regression gate
+- [Evals](docs/evals.md) — the prompt-regression gate and its pluggable judges
 - [Contributing](CONTRIBUTING.md)
 
 ## Quickstart (dev)
@@ -72,7 +72,7 @@ packages/
   ingestion/   gateway + Redis consumer + batch writer
   api/         read API for the dashboard
   dashboard/   React app (Vite)
-  evals/       LLM-as-judge harness + CLI
+  evals/       eval harness (pluggable judge) + CLI
   shared/      span schema (Zod) + pricing table
 db/            migrations + partition management
 docker/        compose: postgres + redis

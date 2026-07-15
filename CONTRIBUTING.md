@@ -26,7 +26,7 @@ pnpm test
 | `packages/ingestion` | gateway + Redis consumer + idempotent COPY writer |
 | `packages/api` | read API for the dashboard |
 | `packages/dashboard` | React app (Vite) |
-| `packages/evals` | LLM-as-judge harness + `agentlens` CLI |
+| `packages/evals` | eval harness (pluggable judge) + `agentlens` CLI |
 | `db/` | migrations + partition management |
 | `docker/` | compose: postgres + redis |
 | `docs/` | quickstart, SDK reference, self-host, evals |
