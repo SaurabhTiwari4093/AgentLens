@@ -31,9 +31,9 @@ jobs:
           --health-interval 2s --health-timeout 3s --health-retries 20
     steps:
       - uses: actions/checkout@v4
+      # No `version:` here on purpose — it's read from package.json's
+      # "packageManager" field, so the pnpm version lives in exactly one place.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
