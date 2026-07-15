@@ -25,6 +25,10 @@ export interface SessionSummary {
   started_at: string;
   ended_at: string;
   total_cost_usd: number;
+  agent_ms: number;
+  tool_ms: number;
+  llm_ms: number;
+  error_count: number;
 }
 
 export interface TraceSummary {
@@ -45,9 +49,7 @@ async function get<T>(path: string): Promise<T> {
 export const api = {
   sessions: () => get<{ sessions: SessionSummary[] }>('/v1/sessions?limit=200'),
   session: (id: string) =>
-    get<{ session_id: string; traces: TraceSummary[]; spans: SpanRow[] }>(
-      `/v1/sessions/${id}`,
-    ),
+    get<{ session_id: string; traces: TraceSummary[]; spans: SpanRow[] }>(`/v1/sessions/${id}`),
   trace: (id: string, start: string) =>
     get<{ trace_id: string; spans: SpanRow[] }>(
       `/v1/traces/${id}?start=${encodeURIComponent(start)}`,

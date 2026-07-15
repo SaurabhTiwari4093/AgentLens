@@ -25,6 +25,11 @@ export interface SessionSummary {
   started_at: string;
   ended_at: string;
   total_cost_usd: number;
+  /** Summed duration per span kind — drives the kind-share bar on session cards. */
+  agent_ms: number;
+  tool_ms: number;
+  llm_ms: number;
+  error_count: number;
 }
 
 const SPAN_SELECT = `
@@ -51,7 +56,11 @@ export async function listSessions(
             count(DISTINCT trace_id)::int    AS trace_count,
             min(started_at)                  AS started_at,
             max(ended_at)                    AS ended_at,
-            COALESCE(sum(cost_usd), 0)::float8 AS total_cost_usd
+            COALESCE(sum(cost_usd), 0)::float8 AS total_cost_usd,
+            COALESCE(sum(duration_ms) FILTER (WHERE kind = 'agent'), 0)::float8 AS agent_ms,
+            COALESCE(sum(duration_ms) FILTER (WHERE kind = 'tool'), 0)::float8  AS tool_ms,
+            COALESCE(sum(duration_ms) FILTER (WHERE kind = 'llm'), 0)::float8   AS llm_ms,
+            count(*) FILTER (WHERE attributes ? 'error')::int AS error_count
      FROM spans
      WHERE session_id IS NOT NULL ${sinceClause}
      GROUP BY session_id
@@ -72,10 +81,7 @@ export interface TraceSummary {
   total_cost_usd: number;
 }
 
-export async function listSessionTraces(
-  pool: pg.Pool,
-  sessionId: string,
-): Promise<TraceSummary[]> {
+export async function listSessionTraces(pool: pg.Pool, sessionId: string): Promise<TraceSummary[]> {
   const { rows } = await pool.query<TraceSummary>(
     `SELECT trace_id,
             (array_agg(name ORDER BY started_at) FILTER (WHERE parent_span_id IS NULL))[1] AS root_name,
